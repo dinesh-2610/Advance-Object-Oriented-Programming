@@ -1,0 +1,25 @@
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.assertThrows;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class CurrencyConverterTest {
+private final CurrencyConverter converter = new CurrencyConverter();
+
+@Test
+public void testValidConversion() {
+    converter.addExchangeRate("USD", "EUR", 0.85);
+    double result = converter.convert(100, "USD", "EUR");
+    assertEquals(85.0, result, 0.01);
+}
+
+@Test
+public void testInvalidAmount() {
+    assertThrows(IllegalArgumentException.class, () -> converter.convert(-100, "USD", "EUR"));
+}
+
+@Test
+public void testInvalidCurrencyPair() {
+    assertThrows(IllegalArgumentException.class, () -> converter.convert(100, "USD", "JPY"));
+}
+}
